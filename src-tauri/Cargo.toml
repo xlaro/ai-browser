@@ -1,0 +1,30 @@
+[package]
+name = "ai-browser"
+version = "0.1.0"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# Default features removed (asset compression, dynamic ACL, Linux extras).
+#  - wry: the WebView2 backend
+#  - common-controls-v6: needed by the native menus
+#  - unstable: several webviews inside one window
+# Pinned to a minor version because the memory API in main.rs uses the
+# webview2-com types that this Tauri version exposes.
+tauri = { version = "~2.12", default-features = false, features = ["wry", "common-controls-v6", "unstable"] }
+
+# Already part of Tauri's own dependency tree on Windows; declared only so the
+# WebView2 memory-target API can be called. Versions must match Tauri's.
+[target.'cfg(windows)'.dependencies]
+webview2-com = "0.39"
+windows = "0.62"
+
+# Small, fast-starting release binary
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

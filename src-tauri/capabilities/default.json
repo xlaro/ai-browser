@@ -1,0 +1,11 @@
+{
+  "identifier": "tab-bar-ui",
+  "description": "Lets only the local tab-bar webview (label: ui) call the tab commands.",
+  "webviews": ["ui"],
+  "permissions": [
+    "allow-get-state",
+    "allow-open-service",
+    "allow-activate-tab",
+    "allow-close-tab"
+  ]
+}
